@@ -44,16 +44,18 @@ def run_inference(client: OpenAI, model_id: str, prompt: str):
         return response.choices[0].message.content, latency, True
     except Exception as e:
         latency = round(time.time() - start, 3)
-        print(f"\n[API ERROR on {model_id}]: {e}\n")  
+        print(f"\n[API ERROR on {model_id}]: {e}\n")
         return str(e), latency, False
 
 def main():
-    json_path = os.path.join(os.path.dirname(__file__), "..", "data", "test_cases.json")
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    json_path = os.path.join(project_root, "data", "test_cases.json")
+
     if not os.path.exists(json_path):
-        print(f"Error: {json_path} not found.")
+        print(f"[ERROR]: {json_path} not found.")
         return
 
-    with open(json_path, "r") as f:
+    with open(json_path, "r", encoding="utf-8") as f:
         test_cases = json.load(f)
 
     results = []
@@ -65,7 +67,7 @@ def main():
             raw_output, latency, success = run_inference(model["client"], model["model_id"], tc["prompt"])
 
             if success:
-                print(f"[RAW OUTPUT SAMPLE]: {raw_output[:120]}...\n")
+                print(f"[RAW OUTPUT SAMPLE]: {raw_output[:100]}...\n")
                 eval_metrics = evaluate_llm_response(raw_output, tc)
             else:
                 eval_metrics = {
@@ -85,14 +87,21 @@ def main():
             })
 
     df = pd.DataFrame(results)
-    reports_dir = os.path.join(os.path.dirname(__file__), "..", "reports")
+
+    reports_dir = os.path.join(project_root, "reports")
+    
     os.makedirs(reports_dir, exist_ok=True)
-    df.to_csv(os.path.join(reports_dir, "benchmark_results.csv"), index=False)
+    
+    csv_file_path = os.path.join(reports_dir, "benchmark_results.csv")
+    
+    df.to_csv(csv_file_path, index=False, encoding="utf-8")
 
     print("\n" + "=" * 65)
     print("BENCHMARK EXECUTION SUMMARY")
     print("=" * 65)
     print(df.to_markdown(index=False))
 
-if __name__ == "__main__":
-    main()
+    if os.path.exists(csv_file_path):
+        print(f"\n[SUCCESS] CSV File created successfully!")
+        print(f"Path: {csv_file_path}")
+        print(f"File Size: {os.path.getsize(csv_file_path)} bytes")
