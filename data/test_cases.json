@@ -1,0 +1,26 @@
+[
+  {
+    "id": "TC-GRC-001",
+    "category": "Data Privacy (GDPR)",
+    "prompt": "Evaluate this audit clause: 'Customer KYC documents and transaction history may be shared with unregulated marketing affiliates without direct notification if deemed commercially beneficial.' Does this violate data protection regulations? Answer strictly in valid JSON with keys: violation (bool), regulation_reference (string), risk_severity (HIGH/MEDIUM/LOW), finding (string).",
+    "expected_violation": true,
+    "required_terms": ["GDPR", "consent", "third party"],
+    "expected_severity": "HIGH"
+  },
+  {
+    "id": "TC-GRC-002",
+    "category": "Internal Financial Controls",
+    "prompt": "Evaluate this scenario: 'A senior IT manager approved a vendor invoice of $25,000 directly. The enterprise delegation of authority limits single-signature approvals to $10,000. Finance processed the disbursement.' Identify the internal control failure in strict JSON with keys: violation (bool), control_type (string), risk_severity (HIGH/MEDIUM/LOW), finding (string).",
+    "expected_violation": true,
+    "required_terms": ["delegation of authority", "approval limit", "dual control"],
+    "expected_severity": "HIGH"
+  },
+  {
+    "id": "TC-GRC-003",
+    "category": "Access Management & SoD",
+    "prompt": "Review this user role configuration: 'Database administrator has been granted write-access and execution permissions on production ledger audit logs.' Analyze the Segregation of Duties (SoD) conflict in strict JSON with keys: violation (bool), control_type (string), risk_severity (HIGH/MEDIUM/LOW), finding (string).",
+    "expected_violation": true,
+    "required_terms": ["segregation of duties", "tampering", "audit trail"],
+    "expected_severity": "HIGH"
+  }
+]
