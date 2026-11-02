@@ -27,6 +27,9 @@ MODELS = [
 ]
 
 def run_inference(client: OpenAI, model_id: str, prompt: str):
+    """
+    LLM එක වෙත audit prompt එක යවා response එක සහ latency එක ලබාගනී.
+    """
     start = time.time()
     try:
         response = client.chat.completions.create(
@@ -48,11 +51,12 @@ def run_inference(client: OpenAI, model_id: str, prompt: str):
         return str(e), latency, False
 
 def main():
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-    json_path = os.path.join(project_root, "data", "test_cases.json")
+
+    cwd = os.getcwd()
+    json_path = os.path.join(cwd, "data", "test_cases.json")
 
     if not os.path.exists(json_path):
-        print(f"[ERROR]: {json_path} not found.")
+        print(f"[ERROR]: {json_path} not found. Please make sure you are in the project root folder.")
         return
 
     with open(json_path, "r", encoding="utf-8") as f:
@@ -67,7 +71,7 @@ def main():
             raw_output, latency, success = run_inference(model["client"], model["model_id"], tc["prompt"])
 
             if success:
-                print(f"[RAW OUTPUT SAMPLE]: {raw_output[:100]}...\n")
+                print(f"[RAW OUTPUT SAMPLE]: {raw_output[:90]}...\n")
                 eval_metrics = evaluate_llm_response(raw_output, tc)
             else:
                 eval_metrics = {
@@ -88,12 +92,10 @@ def main():
 
     df = pd.DataFrame(results)
 
-    reports_dir = os.path.join(project_root, "reports")
-    
+    reports_dir = os.path.join(cwd, "reports")
     os.makedirs(reports_dir, exist_ok=True)
     
     csv_file_path = os.path.join(reports_dir, "benchmark_results.csv")
-    
     df.to_csv(csv_file_path, index=False, encoding="utf-8")
 
     print("\n" + "=" * 65)
@@ -105,3 +107,8 @@ def main():
         print(f"\n[SUCCESS] CSV File created successfully!")
         print(f"Path: {csv_file_path}")
         print(f"File Size: {os.path.getsize(csv_file_path)} bytes")
+    else:
+        print("\n[ERROR] File could not be written to disk.")
+
+if __name__ == "__main__":
+    main()
