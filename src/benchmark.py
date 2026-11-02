@@ -28,8 +28,7 @@ MODELS = [
 
 def run_inference(client: OpenAI, model_id: str, prompt: str):
     """
-    LLM එක වෙත audit prompt එක යවා response එක සහ latency එක ලබාගනී.
-    """
+    Run inference on the given model with the provided prompt."""
     start = time.time()
     try:
         response = client.chat.completions.create(
