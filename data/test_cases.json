@@ -22,5 +22,13 @@
     "expected_violation": true,
     "required_terms": ["segregation of duties", "tampering", "audit trail"],
     "expected_severity": "HIGH"
-  }
+  },
+  {
+  "id": "TC-GRC-004",
+  "category": "Procurement Fraud",
+  "prompt": "Evaluate this scenario: An employee created a fake shell company vendor and approved purchases to it without competitive bidding. Identify violations in JSON with keys: violation (bool), control_type (string), risk_severity (HIGH/MEDIUM/LOW), finding (string).",
+  "expected_violation": true,
+  "required_terms": ["conflict of interest", "bidding", "vendor"],
+  "expected_severity": "HIGH"
+}
 ]

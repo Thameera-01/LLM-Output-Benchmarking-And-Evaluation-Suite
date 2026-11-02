@@ -15,14 +15,14 @@ groq_client = OpenAI(
 
 MODELS = [
     {
-        "name": "Llama-3.1-8B (Groq)",
+        "name": "GPT-OSS-20B (Groq)",
         "client": groq_client,
-        "model_id": "llama-3.1-8b-instant"
+        "model_id": "openai/gpt-oss-20b"
     },
     {
-        "name": "Gemma-2-9B (Groq)",
+        "name": "Qwen-3.8-27B (Groq)",
         "client": groq_client,
-        "model_id": "gemma2-9b-it"
+        "model_id": "qwen/qwen3.8-27b"
     }
 ]
 
@@ -44,18 +44,20 @@ def run_inference(client: OpenAI, model_id: str, prompt: str):
         return response.choices[0].message.content, latency, True
     except Exception as e:
         latency = round(time.time() - start, 3)
+        print(f"\n[API ERROR on {model_id}]: {e}\n")  
         return str(e), latency, False
 
 def main():
-    if not os.path.exists("data/test_cases.json"):
-        print("Error: data/test_cases.json not found.")
+    json_path = os.path.join(os.path.dirname(__file__), "..", "data", "test_cases.json")
+    if not os.path.exists(json_path):
+        print(f"Error: {json_path} not found.")
         return
 
-    with open("data/test_cases.json", "r") as f:
+    with open(json_path, "r") as f:
         test_cases = json.load(f)
 
     results = []
-    print(f">>> Loaded {len(test_cases)} GRC test cases. Running benchmark...\n")
+    print(f"\n>>> Loaded {len(test_cases)} GRC test cases. Running benchmark...\n")
 
     for tc in test_cases:
         for model in MODELS:
@@ -63,6 +65,7 @@ def main():
             raw_output, latency, success = run_inference(model["client"], model["model_id"], tc["prompt"])
 
             if success:
+                print(f"[RAW OUTPUT SAMPLE]: {raw_output[:120]}...\n")
                 eval_metrics = evaluate_llm_response(raw_output, tc)
             else:
                 eval_metrics = {
@@ -82,14 +85,14 @@ def main():
             })
 
     df = pd.DataFrame(results)
-    os.makedirs("reports", exist_ok=True)
-    df.to_csv("reports/benchmark_results.csv", index=False)
+    reports_dir = os.path.join(os.path.dirname(__file__), "..", "reports")
+    os.makedirs(reports_dir, exist_ok=True)
+    df.to_csv(os.path.join(reports_dir, "benchmark_results.csv"), index=False)
 
     print("\n" + "=" * 65)
     print("BENCHMARK EXECUTION SUMMARY")
     print("=" * 65)
     print(df.to_markdown(index=False))
-    print("\nSaved detailed results to reports/benchmark_results.csv")
 
 if __name__ == "__main__":
     main()
