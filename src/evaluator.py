@@ -11,7 +11,7 @@ def evaluate_llm_response(raw_text: str, test_case: dict) -> dict:
         json_valid = True
     except Exception:
         json_valid = False
-
+  
     required_terms = test_case.get("required_terms", [])
     matched = [term for term in required_terms if term.lower() in raw_text.lower()]
     term_coverage = round(len(matched) / len(required_terms), 2) if required_terms else 1.0
