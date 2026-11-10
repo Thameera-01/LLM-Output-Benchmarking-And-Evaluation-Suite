@@ -5,20 +5,34 @@ import os
 import sys
 import subprocess
 
-st.set_page_config(page_title="GRC Benchmark Dashboard", layout="wide", page_icon="")
+st.set_page_config(page_title="GRC Benchmark Dashboard", layout="wide")
 
-st.title("Enterprise GRC LLM Benchmarking Dashboard")
+st.title(" Enterprise GRC LLM Benchmarking Dashboard")
 st.markdown("Visualizing inference latency, strict JSON adherence, and audit terminology accuracy for Open-Weight LLMs via Groq LPU.")
 
 project_root = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(project_root, "reports", "benchmark_results.csv")
 benchmark_script = os.path.join(project_root, "src", "benchmark.py")
+data_dir = os.path.join(project_root, "data")
 
 st.sidebar.header(" Controls")
 
-if st.sidebar.button("Run New Benchmark"):
+uploaded_file = st.sidebar.file_uploader(" Upload Test Cases (CSV)", type=["csv"])
+save_path = None
+
+if uploaded_file is not None:
+    os.makedirs(data_dir, exist_ok=True)
+    save_path = os.path.join(data_dir, "test_cases.csv")
+    with open(save_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
+    st.sidebar.success("File uploaded successfully!")
+
+if st.sidebar.button(" Run New Benchmark"):
     with st.spinner("Executing multi-model inference via Groq API..."):
-        subprocess.run([sys.executable, benchmark_script], cwd=project_root)
+        if save_path:
+            subprocess.run([sys.executable, benchmark_script, save_path], cwd=project_root)
+        else:
+            subprocess.run([sys.executable, benchmark_script], cwd=project_root)
     st.sidebar.success("Benchmark Completed & Data Updated!")
 
 # data loading part
@@ -54,12 +68,12 @@ if df is not None and not df.empty:
             st.metric(" Severity Accuracy", f"{severity_rate:.0f}%")
         with col4:
             avg_coverage = df_filtered["Term Coverage"].mean() * 100
-            st.metric(" Avg Term Coverage", f"{avg_coverage:.0f}%")
+            st.metric("Avg Term Coverage", f"{avg_coverage:.0f}%")
 
         col_chart1, col_chart2 = st.columns(2)
 
         with col_chart1:
-            st.subheader(" Inference Latency by Test Case")
+            st.subheader("⏱ Inference Latency by Test Case")
             fig_latency = px.bar(
                 df_filtered, x="Test ID", y="Latency (s)", color="Model", barmode="group",
                 text_auto='.2f', title="Latency Comparison (Lower is better)"
@@ -81,4 +95,4 @@ if df is not None and not df.empty:
             use_container_width=True
         )
 else:
-    st.warning(f"No benchmark data found at `{csv_path}`. Please click 'Run New Benchmark' in the sidebar.")
+    st.warning(f"No benchmark data found at `{csv_path}`. Please upload a CSV and click 'Run New Benchmark' in the sidebar.")

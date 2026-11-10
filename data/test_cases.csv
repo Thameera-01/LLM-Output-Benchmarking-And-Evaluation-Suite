@@ -1,0 +1,51 @@
+id,category,prompt,expected_violation,required_terms,expected_severity
+TC-GRC-001,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-002,Financial Controls,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-003,Access Management,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-004,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-005,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-006,Access Management,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-007,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-008,Financial Controls,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-009,GDPR,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-010,Financial Controls,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-011,Financial Controls,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-012,Financial Controls,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-013,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-014,Access Management,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-015,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-016,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-017,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-018,Security,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-019,Financial Controls,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-020,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-021,GDPR,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-022,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-023,GDPR,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-024,Security,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-025,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-026,Security,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-027,Security,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-028,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-029,Financial Controls,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-030,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-031,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-032,GDPR,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-033,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-034,Financial Controls,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-035,Financial Controls,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-036,Financial Controls,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-037,Security,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-038,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-039,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-040,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-041,Access Management,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-042,Access Management,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-043,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-044,GDPR,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-045,Access Management,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-046,Security,"An employee bypassed standard security policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-047,GDPR,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH
+TC-GRC-048,Access Management,"An employee bypassed standard approval policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-049,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",MEDIUM
+TC-GRC-050,Security,"An employee bypassed standard validation policies, leading to an unauthorized system action.",True,"unauthorized, bypass, policy",HIGH

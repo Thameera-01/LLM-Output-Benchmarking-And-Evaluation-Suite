@@ -1,5 +1,4 @@
 import os
-import json
 import time
 import pandas as pd
 from dotenv import load_dotenv
@@ -7,7 +6,7 @@ from openai import OpenAI
 from evaluator import evaluate_llm_response
 
 load_dotenv()
-   
+
 groq_client = OpenAI(
     base_url="https://api.groq.com/openai/v1",
     api_key=os.getenv("GROQ_API_KEY", "")
@@ -27,8 +26,7 @@ MODELS = [
 ]
 
 def run_inference(client: OpenAI, model_id: str, prompt: str):
-    """
-    Run inference on the given model with the provided prompt."""
+   
     start = time.time()
     try:
         response = client.chat.completions.create(
@@ -50,27 +48,37 @@ def run_inference(client: OpenAI, model_id: str, prompt: str):
         return str(e), latency, False
 
 def main():
-
     cwd = os.getcwd()
-    json_path = os.path.join(cwd, "data", "test_cases.json")
+    csv_path = os.path.join(cwd, "data", "test_cases.csv")
 
-    if not os.path.exists(json_path):
-        print(f"[ERROR]: {json_path} not found. Please make sure you are in the project root folder.")
+    if not os.path.exists(csv_path):
+        print(f"[ERROR]: {csv_path} not found. Please upload it via Dashboard or run generate_data.py.")
         return
 
-    with open(json_path, "r", encoding="utf-8") as f:
-        test_cases = json.load(f)
+    df_inputs = pd.read_csv(csv_path)
+    test_cases = []
+    
+    for _, row in df_inputs.iterrows():
+        test_cases.append({
+            "id": row["id"],
+            "category": row["category"],
+            "prompt": row["prompt"],
+            "expected_violation": bool(row["expected_violation"]),
+            "required_terms": [t.strip() for t in str(row["required_terms"]).split(",")],
+            "expected_severity": row["expected_severity"]
+        })
 
     results = []
-    print(f"\n>>> Loaded {len(test_cases)} GRC test cases. Running benchmark...\n")
+    print(f"\n>>> Loaded {len(test_cases)} GRC test cases from CSV. Running benchmark...\n")
 
     for tc in test_cases:
         for model in MODELS:
             print(f"Testing {tc['id']} on {model['name']}...")
             raw_output, latency, success = run_inference(model["client"], model["model_id"], tc["prompt"])
 
+            time.sleep(1.2)
+
             if success:
-                print(f"[RAW OUTPUT SAMPLE]: {raw_output[:90]}...\n")
                 eval_metrics = evaluate_llm_response(raw_output, tc)
             else:
                 eval_metrics = {
@@ -101,13 +109,7 @@ def main():
     print("BENCHMARK EXECUTION SUMMARY")
     print("=" * 65)
     print(df.to_markdown(index=False))
-
-    if os.path.exists(csv_file_path):
-        print(f"\n[SUCCESS] CSV File created successfully!")
-        print(f"Path: {csv_file_path}")
-        print(f"File Size: {os.path.getsize(csv_file_path)} bytes")
-    else:
-        print("\n[ERROR] File could not be written to disk.")
+    print(f"\n[SUCCESS] CSV File created successfully at: {csv_file_path}")
 
 if __name__ == "__main__":
     main()
